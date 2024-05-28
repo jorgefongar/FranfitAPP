@@ -4,7 +4,7 @@ import { Input } from './components/ui/Input.tsx';
 import { Button } from './components/ui/Button.tsx';
 import { Label } from './components/ui/Label.tsx';
 import { Titulo2 } from './components/ui/titulo2.tsx';
-
+import {Link } from 'react-router-dom';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -55,9 +55,9 @@ export default function Login() {
             <div className="flex items-center justify-between">
               <Label htmlFor='password'>Contraseña</Label>
               <div className="text-sm">
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                <Link to="/Olvidastepass" className="font-semibold text-indigo-600 hover:text-indigo-500">
                   Olvidaste tu contraseña?
-                </a>
+                </Link>
               </div>
             </div>
             <div className="mt-2">
@@ -79,9 +79,9 @@ export default function Login() {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Aun no eres parte del equipo?{' '}
-          <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-            Únete!
-          </a>
+          <Link to="/Registroinicial" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+        Únete!
+      </Link>
         </p>
       </div>
     </div>
