@@ -3,6 +3,10 @@ import { Routes, Route } from 'react-router-dom';
 import Example from './singin';
 import Registroinicial from './Registroinicial.jsx';
 import Olvidastepass from './Olvidastepass.jsx'
+import Admin from "./admin.jsx"
+import InputRevisionUser from "./InputRevisionUser.jsx"
+import RevisionUser from "./RevisionUser.jsx"
+import RevisionesLista from "./RevisionesLista.jsx"
 
 function App() {
   return (
@@ -10,6 +14,10 @@ function App() {
       <Route path="/" element={<Example />} />
       <Route path="/Registroinicial" element={<Registroinicial />} />
       <Route path="/Olvidastepass" element={<Olvidastepass />} />
+      <Route path="/Admin" element={<Admin />} />
+      <Route path="/RevisionUser" element={<InputRevisionUser />} />
+      <Route path="/RevisionUserAdmin" element={<RevisionUser />} />
+      <Route path="/RevisionesLista" element={<RevisionesLista />} />
     </Routes>
   );
 }
