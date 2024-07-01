@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Example from './singin';
+import Example from './auth/components/singin.jsx';
 import Registroinicial from './Registroinicial.jsx';
 import Olvidastepass from './Olvidastepass.jsx'
 import Admin from "./admin.jsx"

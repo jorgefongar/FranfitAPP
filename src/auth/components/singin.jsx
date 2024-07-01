@@ -1,23 +1,27 @@
+// src/components/Login.js
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Input } from './components/ui/Input.tsx';
-import { Button } from './components/ui/Button.tsx';
-import { Label } from './components/ui/Label.tsx';
-import { Titulo2 } from './components/ui/titulo2.tsx';
-import {Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../services/directusClientAuth';
+import { Input } from '../../components/ui/Input';
+import { Button } from '../../components/ui/Button';
+import { Label } from '../../components/ui/Label';
+import { Titulo2 } from '../../components/ui/titulo2';
+import { Link } from 'react-router-dom';
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
-      const response = await axios.post('/api/login', { email, password });
-      console.log('Respuesta del servidor:', response.data);
-      // Aquí puedes manejar la respuesta del servidor, por ejemplo, redirigir al usuario a otra página
+      const data = await login(email, password);
+      console.log('Respuesta del servidor:', data);
+      // Redirigir a la página /Admin después de un inicio de sesión exitoso
+      navigate('/Admin');
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      console.error(error.message);
       // Aquí puedes manejar los errores, por ejemplo, mostrar un mensaje de error al usuario
     }
   };
@@ -27,7 +31,7 @@ export default function Login() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-21 w-auto"
-          src="/LOGO.png" // Ajusta la ruta del logo según la ubicación en tu proyecto
+          src="/LOGO.png"
           alt="Logo"
         />
         <Titulo2>Bienvenido a Franfit!</Titulo2>
@@ -74,14 +78,16 @@ export default function Login() {
             </div>
           </div>
 
-          <Button type='submit' className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">ACCEDER</Button>
+          <Button type='submit' className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            ACCEDER
+          </Button>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Aun no eres parte del equipo?{' '}
           <Link to="/Registroinicial" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-        Únete!
-      </Link>
+            Únete!
+          </Link>
         </p>
       </div>
     </div>
