@@ -1,7 +1,6 @@
-export {Input}from './Input'
-export    {Button}from './Button'
-export {Label}from './Label'
+export { Input } from '../../shared/components/Input'
+export { Button } from '../../shared/components/Button'
+export { Label } from '../../shared/components/Label'
 
 
 
-  

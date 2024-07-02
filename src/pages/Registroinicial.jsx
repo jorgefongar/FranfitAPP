@@ -1,7 +1,6 @@
-// Principal.jsx
 import React from 'react';
-import NavigationBlockuser from './components/ui/nav';
-import UserRegistrationForm from './components/ui/DatosIniciales';
+import NavigationBlockuser from '../shared/layout/nav';
+import UserRegistrationForm from '../components/ui/DatosIniciales';
 
 const navigation = [
   { name: 'Inicio', href: '#', current: false }

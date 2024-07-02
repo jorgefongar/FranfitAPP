@@ -1,12 +1,12 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/directusClientAuth';
-import { Input } from '../../components/ui/Input';
-import { Button } from '../../components/ui/Button';
-import { Label } from '../../components/ui/Label';
-import { Titulo2 } from '../../components/ui/titulo2';
+import { Input } from '../../shared/components/Input';
+import { Button } from '../../shared/components/Button';
+import { Label } from '../../shared/components/Label';
+import { Titulo2 } from '../../shared/components/titulo2';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -17,12 +17,15 @@ export default function Login() {
     event.preventDefault();
     try {
       const data = await login(email, password);
-      console.log('Respuesta del servidor:', data);
-      // Redirigir a la página /Admin después de un inicio de sesión exitoso
       navigate('/Admin');
     } catch (error) {
-      console.error(error.message);
-      // Aquí puedes manejar los errores, por ejemplo, mostrar un mensaje de error al usuario
+      console.error('Error al iniciar sesión:', error.message);
+      Swal.fire({
+        title: 'Error en el inicio de sesión',
+        text: 'Credenciales incorrectas',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 

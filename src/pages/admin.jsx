@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import Table from './components/ui/Table.tsx';
-import NavigationBlockuser from './components/ui/nav';
+import Table from '../components/ui/Table.tsx';
+import NavigationBlockuser from '../shared/layout/nav';
 
 
 const navigation = [

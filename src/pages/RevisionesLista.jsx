@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import Table from './components/ui/TableRevision';
-import NavigationBlockuser from './components/ui/nav';
-import Badge from "./components/ui/EstadoRevision";
+import Table from '../components/ui/TableRevision';
+import NavigationBlockuser from '../shared/layout/nav';
+import Badge from "../components/ui/EstadoRevision";
 
 const navigation = [
   { name: 'Revisiones', href: '#', current: false },

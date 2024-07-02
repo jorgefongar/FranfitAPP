@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Example from './auth/components/singin.jsx';
-import Registroinicial from './Registroinicial.jsx';
-import Olvidastepass from './Olvidastepass.jsx'
-import Admin from "./admin.jsx"
-import InputRevisionUser from "./InputRevisionUser.jsx"
-import RevisionUser from "./RevisionUser.jsx"
-import RevisionesLista from "./RevisionesLista.jsx"
+import Registroinicial from './pages/Registroinicial.jsx';
+import Olvidastepass from './pages/Olvidastepass.jsx'
+import Admin from "./pages/admin.jsx"
+import InputRevisionUser from "./pages/InputRevisionUser.jsx"
+import RevisionUser from "./pages/RevisionUser.jsx"
+import RevisionesLista from "./pages/RevisionesLista.jsx"
 
 function App() {
   return (

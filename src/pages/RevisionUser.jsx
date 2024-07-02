@@ -1,10 +1,8 @@
-
 import React, { useState } from 'react';
-import NavigationBlockuser from './components/ui/nav';
-import UserInfo from './components/ui/UserInfo';
-import Medidas from './components/ui/Medidas';
-import TwoDimensionalChart from './components/ui/TwoDimensionalChart';
-
+import NavigationBlockuser from '../shared/layout/nav';
+import UserInfo from '../components/ui/UserInfo';
+import Medidas from '../components/ui/Medidas';
+import TwoDimensionalChart from '../components/ui/TwoDimensionalChart';
 
 const navigation = [
   { name: 'Revisiones', href: '#', current: false },
@@ -78,7 +76,7 @@ export default function Example() {
 
   return (
     <div>
-       <NavigationBlockuser navigation={navigation} />
+      <NavigationBlockuser navigation={navigation} />
       <div className="p-4">
         <UserInfo user={userInfo} />
         <div className="flex justify-center mb-4">
@@ -151,19 +149,17 @@ export default function Example() {
           </div>
         </div>
         <div className="mt-4 flex justify-center">
-          <select value={revisionStatus} onChange={handleRevisionStatusChange} className="border p-5 rounded mr-4">
+          <select value={revisionStatus} onChange={handleRevisionStatusChange} className="border py-3 px-5 rounded mr-4">
             <option value="Check">Check</option>
             <option value="Pendiente">Pendiente</option>
             <option value="En espera">En espera</option>
           </select>
-          <button onClick={handleFinishRevision} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button onClick={handleFinishRevision} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded">
             Finalizar revisión
           </button>
         </div>
+
       </div>
-      
- 
-      
     </div>
   );
 }

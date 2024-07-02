@@ -1,49 +1,108 @@
 import React, { useState } from 'react';
-import NavigationBlockuser from './components/ui/nav';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default function BasicForm() {
-  const [formData, setFormData] = useState({
-    peso: '',
-    biceps: '',
-    cintura: '',
-    cadera: '',
-    abdomen: '',
-    cuello: '',
-    pierna: '',
-    fotoFrontal: null,
-    fotoEspalda: null,
-    fotoPerfil: null,
-  });
+  const [userPeso, setUserPeso] = useState("");
+  const [userBiceps, setUserBiceps] = useState("");
+  const [userCintura, setUserCintura] = useState("");
+  const [userCadera, setUserCadera] = useState("");
+  const [userAbdomen, setUserAbdomen] = useState("");
+  const [userCuello, setUserCuello] = useState("");
+  const [userPierna, setUserPierna] = useState("");
 
-  const navigation = [];
+  const [fotoFrontal, setFotoFrontal] = useState(null);
+  const [fotoEspalda, setFotoEspalda] = useState(null);
+  const [fotoPerfil, setFotoPerfil] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
     if (files) {
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: files[0]
-      }));
+      switch (name) {
+        case 'fotoFrontal':
+          setFotoFrontal(files[0]);
+          break;
+        case 'fotoEspalda':
+          setFotoEspalda(files[0]);
+          break;
+        case 'fotoPerfil':
+          setFotoPerfil(files[0]);
+          break;
+        default:
+          break;
+      }
     } else {
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value
-      }));
+      switch (name) {
+        case 'peso':
+          setUserPeso(value);
+          break;
+        case 'biceps':
+          setUserBiceps(value);
+          break;
+        case 'cintura':
+          setUserCintura(value);
+          break;
+        case 'cadera':
+          setUserCadera(value);
+          break;
+        case 'abdomen':
+          setUserAbdomen(value);
+          break;
+        case 'cuello':
+          setUserCuello(value);
+          break;
+        case 'pierna':
+          setUserPierna(value);
+          break;
+        default:
+          break;
+      }
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Aquí puedes enviar los datos a tu backend o hacer lo que necesites con ellos
+
+    const userData = {
+      peso: userPeso,
+      biceps: userBiceps,
+      cintura: userCintura,
+      cadera: userCadera,
+      abdomen: userAbdomen,
+      cuello: userCuello,
+      pierna: userPierna,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:8055/items/userInfo', userData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      Swal.fire({
+        title: 'Éxito',
+        text: 'Los datos han sido registrados correctamente.',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
+    } catch (error) {
+      console.error('Error al registrar los datos:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al registrar los datos. Por favor, inténtalo de nuevo.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    }
   };
 
   return (
     <div>
-      <NavigationBlockuser navigation={navigation} />
       <div className="flex justify-between">
         <div className="w-1/2">
-          <h1 className="text-2xl font-bold mt-4 ml-4">Bienvenido {formData.nombre ? formData.nombre : ''}!!</h1>
+          <h1 className="text-2xl font-bold mt-4 ml-4">Bienvenido!</h1>
           <form onSubmit={handleSubmit} className="space-y-6 mt-4 ml-4">
             <div>
               <label htmlFor="peso" className="block text-sm font-medium text-gray-700">Peso (KG)</label>
@@ -51,7 +110,7 @@ export default function BasicForm() {
                 type="number"
                 id="peso"
                 name="peso"
-                value={formData.peso}
+                value={userPeso}
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce tu peso en kilogramos"
@@ -63,7 +122,7 @@ export default function BasicForm() {
                 type="number"
                 id="biceps"
                 name="biceps"
-                value={formData.biceps}
+                value={userBiceps}
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu bíceps"
@@ -75,7 +134,7 @@ export default function BasicForm() {
                 type="number"
                 id="cintura"
                 name="cintura"
-                value={formData.cintura}
+                value={userCintura}
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu cintura"
@@ -87,7 +146,7 @@ export default function BasicForm() {
                 type="number"
                 id="cadera"
                 name="cadera"
-                value={formData.cadera}
+                value={userCadera}
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu cadera"
@@ -99,7 +158,7 @@ export default function BasicForm() {
                 type="number"
                 id="abdomen"
                 name="abdomen"
-                value={formData.abdomen}
+                value={userAbdomen}
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu abdomen"
@@ -111,7 +170,7 @@ export default function BasicForm() {
                 type="number"
                 id="cuello"
                 name="cuello"
-                value={formData.cuello}
+                value={userCuello}
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu cuello"
@@ -123,7 +182,7 @@ export default function BasicForm() {
                 type="number"
                 id="pierna"
                 name="pierna"
-                value={formData.pierna}
+                value={userPierna}
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu pierna"

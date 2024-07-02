@@ -1,6 +1,6 @@
 import React from 'react';
-import Badge from './EstadoRevision'; // Importa el componente Badge aquí
-import {Button} from './Button.tsx'
+import Badge from './EstadoRevision';
+import { Button } from '../../shared/components/Button'
 import { useTable, Column } from 'react-table';
 
 interface TableProps {

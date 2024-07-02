@@ -43,9 +43,8 @@ function Table({ columns, data }: TableProps) {
                 {row.cells.map(cell => (
                   <td
                     {...cell.getCellProps()}
-                    className={`px-6 py-4 whitespace-nowrap text-sm text-gray-500 ${
-                      (cell.column as any).onClick ? 'cursor-pointer hover:text-blue-500' : ''
-                    }`}
+                    className={`px-6 py-4 whitespace-nowrap text-sm text-gray-500 ${(cell.column as any).onClick ? 'cursor-pointer hover:text-blue-500' : ''
+                      }`}
                     onClick={() => {
                       if ((cell.column as any).onClick) {
                         (cell.column as any).onClick(row.original);
