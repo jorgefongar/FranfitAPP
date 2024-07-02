@@ -114,6 +114,7 @@ export default function BasicForm() {
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce tu peso en kilogramos"
+                required
               />
             </div>
             <div>
@@ -126,6 +127,7 @@ export default function BasicForm() {
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu bíceps"
+                required
               />
             </div>
             <div>
@@ -138,6 +140,7 @@ export default function BasicForm() {
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu cintura"
+                required
               />
             </div>
             <div>
@@ -150,6 +153,7 @@ export default function BasicForm() {
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu cadera"
+                required
               />
             </div>
             <div>
@@ -162,6 +166,7 @@ export default function BasicForm() {
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu abdomen"
+                required
               />
             </div>
             <div>
@@ -174,6 +179,7 @@ export default function BasicForm() {
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu cuello"
+                required
               />
             </div>
             <div>
@@ -186,6 +192,7 @@ export default function BasicForm() {
                 onChange={handleChange}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Introduce la medida de tu pierna"
+                required
               />
             </div>
             <div>
