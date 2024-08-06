@@ -22,7 +22,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
     "react-table": "^7.8.0",
-    "sweetalert2": "^11.12.1"
+    "sweetalert2": "^11.12.4"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.41",

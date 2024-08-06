@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { registerUser } from '../../services/apiService'; // Asegúrate de que la ruta sea correcta
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -16,6 +19,8 @@ export default function UserRegistrationForm() {
     observations: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -25,10 +30,45 @@ export default function UserRegistrationForm() {
     setFormData({ ...formData, profilePhoto: e.target.files[0] });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí puedes manejar el envío del formulario, por ejemplo, enviarlo a una API
-    console.log(formData);
+
+    const userData = {
+      first_name: formData.name,
+      last_name: formData.surname,
+      // avatar: formData.profilePhoto,
+      age: formData.age,
+      height: formData.height,
+      weight: formData.weight,
+      email: formData.email,
+      phone: formData.phone,
+      allergies: formData.allergies,
+      foods_you_dont_like: formData.dislikes,
+      food_per_day: formData.mealsPerDay,
+      observations: formData.observations,
+      role: 'b89e1758-67e2-40e0-8e65-4a8e6117c5d2',
+    };
+
+    try {
+      const response = await registerUser(userData);
+      Swal.fire({
+        title: 'Registro exitoso',
+        text: 'El usuario ha sido registrado exitosamente.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        navigate('/');
+      });
+
+    } catch (error) {
+      console.error('Error registering user:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un error registrando al usuario.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
   };
 
   return (
@@ -67,7 +107,7 @@ export default function UserRegistrationForm() {
               onChange={handlePhotoChange}
               className="border p-2 rounded w-full"
               accept="image/*"
-              required
+              // required
             />
           </div>
           <div>

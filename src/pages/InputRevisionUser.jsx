@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 export default function BasicForm() {
   const [userPeso, setUserPeso] = useState("");
@@ -14,6 +15,8 @@ export default function BasicForm() {
   const [fotoFrontal, setFotoFrontal] = useState(null);
   const [fotoEspalda, setFotoEspalda] = useState(null);
   const [fotoPerfil, setFotoPerfil] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -63,6 +66,7 @@ export default function BasicForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // const userId = localStorage.getItem('userId'); // Obtener el ID del usuario del localStorage
 
     const userData = {
       peso: userPeso,
@@ -72,10 +76,13 @@ export default function BasicForm() {
       abdomen: userAbdomen,
       cuello: userCuello,
       pierna: userPierna,
+      // user_id: userId,
+      status: "pendiente",
+      fecha_revision: new Date().toISOString(),
     };
 
     try {
-      const response = await axios.post('http://localhost:8055/items/userInfo', userData, {
+      const response = await axios.post('http://localhost:8055/items/revisiones', userData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -86,6 +93,8 @@ export default function BasicForm() {
         text: 'Los datos han sido registrados correctamente.',
         icon: 'success',
         confirmButtonText: 'Aceptar'
+      }).then(() => {
+        navigate('/Admin'); // Redirigir a la página de administración después de completar el formulario ???¿¿¿
       });
     } catch (error) {
       console.error('Error al registrar los datos:', error);

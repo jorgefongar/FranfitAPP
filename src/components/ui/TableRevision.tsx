@@ -1,6 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Badge from './EstadoRevision';
-import { Button } from '../../shared/components/Button'
+import { Button } from '../../shared/components/Button';
 import { useTable, Column } from 'react-table';
 
 interface TableProps {
@@ -9,6 +10,8 @@ interface TableProps {
 }
 
 function Table({ columns, data }: TableProps) {
+  const navigate = useNavigate();
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -19,6 +22,10 @@ function Table({ columns, data }: TableProps) {
     columns,
     data,
   });
+
+  const handleAccederClick = (userId: string) => {
+    navigate(`/RevisionUserAdmin/${userId}`);
+  };
 
   return (
     <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
@@ -37,7 +44,7 @@ function Table({ columns, data }: TableProps) {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row, index) => {
+        {rows.map((row) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()} className="bg-white border-b">
@@ -46,7 +53,6 @@ function Table({ columns, data }: TableProps) {
                   {...cell.getCellProps()}
                   className="px-4 py-2 whitespace-nowrap text-sm text-gray-500"
                 >
-                  {/* Verifica si la columna es 'review' para mostrar el Badge */}
                   {cell.column.id === 'review' ? (
                     <Badge status={cell.value} />
                   ) : (
@@ -55,9 +61,12 @@ function Table({ columns, data }: TableProps) {
                 </td>
               ))}
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                
-                  <Button type='submit'>ACCEDER</Button>
-                
+                <Button
+                  type='submit'
+                  onClick={() => handleAccederClick(row.original.userId)}
+                >
+                  ACCEDER
+                </Button>
               </td>
             </tr>
           );

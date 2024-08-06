@@ -17,7 +17,9 @@ export default function Login() {
     event.preventDefault();
     try {
       const data = await login(email, password);
-      navigate('/Admin');
+      // localStorage.setItem('userId', data.data.user.id);
+      // navigate('/Admin');
+      navigate('/RevisionUser');
     } catch (error) {
       console.error('Error al iniciar sesión:', error.message);
       Swal.fire({
@@ -88,7 +90,7 @@ export default function Login() {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Aun no eres parte del equipo?{' '}
-          <Link to="/Registroinicial" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          <Link to="/Admin" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Únete!
           </Link>
         </p>

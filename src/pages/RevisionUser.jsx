@@ -1,39 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getUserById } from '../services/apiService';
 import NavigationBlockuser from '../shared/layout/nav';
 import UserInfo from '../components/ui/UserInfo';
 import Medidas from '../components/ui/Medidas';
 import TwoDimensionalChart from '../components/ui/TwoDimensionalChart';
 
 const navigation = [
-  { name: 'Revisiones', href: '#', current: false },
+  { name: 'Revisiones', href: '/RevisionesLista', current: false },
   { name: 'Pagos', href: '#', current: false },
-  { name: 'Cliente', href: '#', current: false },
+  { name: 'Cliente', href: '/Admin', current: false },
 ];
 
-const medidas = [
-  { label: 'Peso', value: 70 },
-  { label: 'Bíceps', value: 30 },
-  { label: 'Cintura', value: 80 },
-  { label: 'Cadera', value: 90 },
-  { label: 'Abdomen', value: 85 },
-  { label: 'Cuello', value: 35 },
-  { label: 'Pierna', value: 60 }
-];
-export default function Example() {
-  const [userInfo] = useState({
-    name: 'John Doe',
-    age: 30,
-    height: '180 cm',
-    gender: 'Masculino',
-    email: 'johndoe@example.com',
-    photo: 'https://via.placeholder.com/150', // Reemplaza esto con la URL de la foto de perfil real
-  });
-
+export default function RevisionUser() {
+  const { userId } = useParams();
+  const [userInfo, setUserInfo] = useState(null);
   const [oldDate, setOldDate] = useState('');
   const [newDate, setNewDate] = useState('');
   const [oldData, setOldData] = useState(null);
   const [newData, setNewData] = useState(null);
-  const [revisionStatus, setRevisionStatus] = useState('Pendiente'); // Estado de la revisión por defecto
+  const [revisionStatus, setRevisionStatus] = useState('Pendiente');
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [newPhotos, setNewPhotos] = useState({
+    frontal: null,
+    perfil: null,
+    espalda: null,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const user = await getUserById(userId);
+        setUserInfo({
+          name: `${user.first_name} ${user.last_name}`,
+          age: user.age || 30,
+          height: user.height + " cm" || '180 cm',
+          gender: user.gender || 'Masculino',
+          email: user.email,
+          photo: user.avatar || 'https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133351928-stock-illustration-default-placeholder-man-and-woman.jpg',
+        });
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
+    fetchData();
+  }, [userId]);
 
   const handleOldDateChange = (e) => {
     setOldDate(e.target.value);
@@ -74,11 +85,30 @@ export default function Example() {
     console.log('Revisión finalizada');
   };
 
+  const handlePhotoClick = (url) => {
+    setSelectedPhoto(url);
+  };
+
+  const handleNewPhotoChange = (e, type) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewPhotos((prev) => ({ ...prev, [type]: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const closeModal = () => {
+    setSelectedPhoto(null);
+  };
+
   return (
     <div>
       <NavigationBlockuser navigation={navigation} />
       <div className="p-4">
-        <UserInfo user={userInfo} />
+        {userInfo && <UserInfo user={userInfo} />}
         <div className="flex justify-center mb-4">
           <div className="flex mr-4">
             <label className="block mb-2">Seleccionar fecha antigua:</label>
@@ -110,19 +140,37 @@ export default function Example() {
             <div>
               <div>Frontal</div>
               {Array.from({ length: 1 }).map((_, index) => (
-                <img key={index} src={`https://via.placeholder.com/150?text=Frontal${index + 1}`} alt={`Frontal${index + 1}`} className="mb-2" />
+                <img
+                  key={index}
+                  src={`https://png.pngtree.com/background/20230922/original/pngtree-muscular-man-torso-fashion-healthy-man-photo-picture-image_5174568.jpg${index + 1}`}
+                  alt={`Frontal${index + 1}`}
+                  className="mb-2 cursor-pointer w-24 h-24 object-cover"
+                  onClick={() => handlePhotoClick(`https://png.pngtree.com/background/20230922/original/pngtree-muscular-man-torso-fashion-healthy-man-photo-picture-image_5174568.jpg${index + 1}`)}
+                />
               ))}
             </div>
             <div>
               <div>Perfil</div>
               {Array.from({ length: 1 }).map((_, index) => (
-                <img key={index} src={`https://via.placeholder.com/150?text=Perfil${index + 1}`} alt={`Perfil${index + 1}`} className="mb-2" />
+                <img
+                  key={index}
+                  src={`https://st4.depositphotos.com/10313122/22691/i/450/depositphotos_226918840-stock-photo-full-body-shot-of-profile.jpg${index + 1}`}
+                  alt={`Perfil${index + 1}`}
+                  className="mb-2 cursor-pointer w-24 h-24 object-cover"
+                  onClick={() => handlePhotoClick(`https://st4.depositphotos.com/10313122/22691/i/450/depositphotos_226918840-stock-photo-full-body-shot-of-profile.jpg${index + 1}`)}
+                />
               ))}
             </div>
             <div>
               <div>Espalda</div>
               {Array.from({ length: 1 }).map((_, index) => (
-                <img key={index} src={`https://via.placeholder.com/150?text=Espalda${index + 1}`} alt={`Espalda${index + 1}`} className="mb-2" />
+                <img
+                  key={index}
+                  src={`https://www.soyvisual.org/sites/default/files/styles/twitter_card/public/images/photos/cue_0019.jpg?itok=53KHoUfd${index + 1}`}
+                  alt={`Espalda${index + 1}`}
+                  className="mb-2 cursor-pointer w-24 h-24 object-cover"
+                  onClick={() => handlePhotoClick(`https://www.soyvisual.org/sites/default/files/styles/twitter_card/public/images/photos/cue_0019.jpg?itok=53KHoUfd${index + 1}`)}
+                />
               ))}
             </div>
           </div>
@@ -130,36 +178,64 @@ export default function Example() {
             <label className="block mb-2">Fotos nuevas:</label>
             <div>
               <div>Frontal</div>
-              {Array.from({ length: 1 }).map((_, index) => (
-                <img key={index} src={`https://via.placeholder.com/150?text=Frontal${index + 1}`} alt={`Frontal${index + 1}`} className="mb-2" />
-              ))}
+              <input type="file" onChange={(e) => handleNewPhotoChange(e, 'frontal')} className="mb-2" />
+              {newPhotos.frontal && (
+                <img
+                  src={newPhotos.frontal}
+                  alt="Frontal nueva"
+                  className="mb-2 cursor-pointer w-24 h-24 object-cover"
+                  onClick={() => handlePhotoClick(newPhotos.frontal)}
+                />
+              )}
             </div>
             <div>
               <div>Perfil</div>
-              {Array.from({ length: 1 }).map((_, index) => (
-                <img key={index} src={`https://via.placeholder.com/150?text=Perfil${index + 1}`} alt={`Perfil${index + 1}`} className="mb-2" />
-              ))}
+              <input type="file" onChange={(e) => handleNewPhotoChange(e, 'perfil')} className="mb-2" />
+              {newPhotos.perfil && (
+                <img
+                  src={newPhotos.perfil}
+                  alt="Perfil nueva"
+                  className="mb-2 cursor-pointer w-24 h-24 object-cover"
+                  onClick={() => handlePhotoClick(newPhotos.perfil)}
+                />
+              )}
             </div>
             <div>
               <div>Espalda</div>
-              {Array.from({ length: 1 }).map((_, index) => (
-                <img key={index} src={`https://via.placeholder.com/150?text=Espalda${index + 1}`} alt={`Espalda${index + 1}`} className="mb-2" />
-              ))}
+              <input type="file" onChange={(e) => handleNewPhotoChange(e, 'espalda')} className="mb-2" />
+              {newPhotos.espalda && (
+                <img
+                  src={newPhotos.espalda}
+                  alt="Espalda nueva"
+                  className="mb-2 cursor-pointer w-24 h-24 object-cover"
+                  onClick={() => handlePhotoClick(newPhotos.espalda)}
+                />
+              )}
             </div>
           </div>
         </div>
         <div className="mt-4 flex justify-center">
           <select value={revisionStatus} onChange={handleRevisionStatusChange} className="border py-3 px-5 rounded mr-4">
-            <option value="Check">Check</option>
-            <option value="Pendiente">Pendiente</option>
-            <option value="En espera">En espera</option>
+            <option value="check">Check</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="espera">En espera</option>
           </select>
           <button onClick={handleFinishRevision} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded">
             Finalizar revisión
           </button>
         </div>
-
       </div>
+
+      {selectedPhoto && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded">
+            <img src={selectedPhoto} alt="Selected" className="max-w-full max-h-screen" />
+            <button onClick={closeModal} className="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
